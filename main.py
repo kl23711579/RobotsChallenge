@@ -36,7 +36,10 @@ if __name__ == '__main__':
                 print("\nERROR: %s" % (err))
         elif len(robots) > 0: # there exist robots in table
             if input_strs[0] == "robot":
-                current_robot = input_strs[1]
+                if int(input_strs[1]) <= len(robots):
+                    current_robot = input_strs[1]
+                else:
+                    print("\nERROR: Robot not exist!!!")
             elif input_strs[0] == "move":
                 new_pos = [sum(x) for x in zip(robots[current_robot]["position"], move_steps[robots[current_robot]["direction"]]) ]
                 is_vaild, err = check_pos(robots, new_pos)
