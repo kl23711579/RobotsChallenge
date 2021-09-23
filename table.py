@@ -80,7 +80,7 @@ class Table():
         if robot_number == 1:
             print("\nOutput: %d, %d, %s" % (pos1, pos2, direction))
         else:
-            print("\nOutput: There are %d robots in the table. Robot %s : %d, %d, %s" % (robot_number, current_robot, pos1, pos2, direction))
+            print("\nOutput: There are %d robots in the table. Robot %s : %d, %d, %s" % (robot_number, self.current_robot, pos1, pos2, direction))
 
 if __name__ == '__main__':
     t = Table()
