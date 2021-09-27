@@ -1,17 +1,4 @@
-def check_pos(robots, pos):
-    # check is inside table
-    if pos[0] < 0 or pos[1] < 0 or pos[0] > 4 or pos[1] > 4:
-        error_msg = f"Position ({pos[0]}, {pos[1]}) is outside table."
-        return [False, error_msg]
-    else: # chech is conflict with other robot
-        for robot in robots.keys():
-            if pos[0] == robots[robot]["position"][0] and pos[1] == robots[robot]["position"][1]:
-                error_msg = f"Position ({pos[0]}, {pos[1]}) exist Robot {robot}."
-                return [False, error_msg]
-
-    return [True, ""]
-
-class Table():
+class Table:
     def __init__(self):
         self.robots = {}
         self.current_robot = ""
@@ -40,7 +27,7 @@ class Table():
         pos1, pos2, direction = input_str.split(",")
         pos1 = int(pos1)
         pos2 = int(pos2)
-        is_vaild, err = check_pos(self.robots, [pos1, pos2])
+        is_vaild, err = self.check_pos([pos1, pos2])
         if is_vaild:
             robot_num = str(len(self.robots)+1)
             self.robots[robot_num] = { "position": [pos1, pos2], "direction": direction }
@@ -53,7 +40,7 @@ class Table():
     def move(self):
         move_steps = { "north": [0, 1], "south": [0, -1], "west": [-1, 0], "east": [1, 0] }
         new_pos = [sum(x) for x in zip(self.robots[self.current_robot]["position"], move_steps[self.robots[self.current_robot]["direction"]]) ]
-        is_vaild, err = check_pos(self.robots, new_pos)
+        is_vaild, err = self.check_pos(new_pos)
         if is_vaild:
             self.robots[self.current_robot]["position"] = new_pos
         # else:
@@ -82,6 +69,19 @@ class Table():
         else:
             print("\nOutput: There are %d robots in the table. Robot %s : %d, %d, %s" % (robot_number, self.current_robot, pos1, pos2, direction))
 
+    def check_pos(self, pos):
+        # check is inside table
+        if pos[0] < 0 or pos[1] < 0 or pos[0] > 4 or pos[1] > 4:
+            error_msg = f"Position ({pos[0]}, {pos[1]}) is outside table."
+            return [False, error_msg]
+        else: # chech is conflict with other robot
+            for robot in self.robots.keys():
+                if pos[0] == self.robots[robot]["position"][0] and pos[1] == self.robots[robot]["position"][1]:
+                    error_msg = f"Position ({pos[0]}, {pos[1]}) exist Robot {robot}."
+                    return [False, error_msg]
+
+        return [True, ""]
+
 if __name__ == '__main__':
     import sys
     t = Table()
@@ -91,6 +91,7 @@ if __name__ == '__main__':
             commands = [ x.strip() for x in f.readlines() ]
         
         for command in commands:
+            print(command)
             t.receive_input(command)
     else:
         while True:

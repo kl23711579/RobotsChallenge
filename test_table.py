@@ -1,42 +1,64 @@
 import unittest
-from table import Table, check_pos
+from table import Table
 from unittest.mock import patch
 from io import StringIO
 
-class TestCheckPosMethods(unittest.TestCase):
-
-    def test_no_robot_in_table(self):
-        robots = {}
-        is_vaild, err = check_pos(robots, [1, 2])
-        self.assertTrue(is_vaild)
-
-    def test_exist_robot_in_table(self):
-        robots = {"1":{"position": [1,1], "direction": "east"}}
-        is_vaild, err = check_pos(robots, [1, 2])
-        self.assertTrue(is_vaild)
-
-    def test_put_new_robot_conflict(self):
-        robots = {"1":{"position": [1,1], "direction": "east"}}
-        is_vaild, err = check_pos(robots, [1, 1])
-        self.assertFalse(is_vaild)
-
-    def test_put_new_robot_ouside_table_north(self):
-        is_vaild, err = check_pos({}, [0, 5])
-        self.assertFalse(is_vaild)
-
-    def test_put_new_robot_ouside_table_south(self):
-        is_vaild, err = check_pos({}, [0, -1])
-        self.assertFalse(is_vaild)
-
-    def test_put_new_robot_ouside_table_east(self):
-        is_vaild, err = check_pos({}, [5, 0])
-        self.assertFalse(is_vaild)
-
-    def test_put_new_robot_ouside_table_west(self):
-        is_vaild, err = check_pos({}, [-1, 0])
-        self.assertFalse(is_vaild)
-
 class TestTableMethods(unittest.TestCase):
+    def test_check_pos_with_no_robot_in_table(self):
+        robots = {}
+        t = Table()
+        t.robots = robots
+        t.current_robot = ""
+        is_vaild, err = t.check_pos([1, 2])
+        self.assertTrue(is_vaild)
+
+    def test_check_pos_exist_robot_in_table(self):
+        robots = {"1":{"position": [1,1], "direction": "east"}}
+        t = Table()
+        t.robots = robots
+        t.current_robot = "1"
+        is_vaild, err = t.check_pos([1, 2])
+        self.assertTrue(is_vaild)
+
+    def test_check_pos_put_new_robot_conflict(self):
+        robots = {"1":{"position": [1,1], "direction": "east"}}
+        t = Table()
+        t.robots = robots
+        t.current_robot = "1"
+        is_vaild, err = t.check_pos([1, 1])
+        self.assertFalse(is_vaild)
+
+    def test_check_pos_put_new_robot_ouside_table_north(self):
+        robots = {}
+        t = Table()
+        t.robots = robots
+        t.current_robot = ""
+        is_vaild, err = t.check_pos([0, 5])
+        self.assertFalse(is_vaild)
+
+    def test_check_pos_put_new_robot_ouside_table_south(self):
+        robots = {}
+        t = Table()
+        t.robots = robots
+        t.current_robot = ""
+        is_vaild, err = t.check_pos([0, -1])
+        self.assertFalse(is_vaild)
+
+    def test_check_pos_put_new_robot_ouside_table_east(self):
+        robots = {}
+        t = Table()
+        t.robots = robots
+        t.current_robot = ""
+        is_vaild, err = t.check_pos([5, 0])
+        self.assertFalse(is_vaild)
+
+    def test_check_pos_put_new_robot_ouside_table_west(self):
+        robots = {}
+        t = Table()
+        t.robots = robots
+        t.current_robot = ""
+        is_vaild, err = t.check_pos([-1, 0])
+        self.assertFalse(is_vaild)
 
     def test_place_robot_in_empty_table(self):
         robots = {

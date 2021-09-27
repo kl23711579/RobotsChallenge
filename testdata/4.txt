@@ -1,0 +1,79 @@
+MOVE
+LEFT
+REPORT
+
+PLACE -1,0,WEST
+REPORT
+
+PLACE 0,0,SOUTH
+REPORT
+Output: 0, 0, SOUTH
+MOVE
+REPORT
+Output: 0, 0, SOUTH
+LEFT
+REPORT
+Output: 0, 0, EAST
+MOVE
+MOVE
+REPORT
+Output: 2, 0, EAST
+LEFT
+MOVE
+REPORT
+Output: 2, 1, NORTH
+MOVE
+RIGHT
+RIGHT
+MOVE
+MOVE
+MOVE
+REPORT
+Output: 2, 0, SOUTH
+PLACE 2,0,EAST
+REPORT
+Output: 2, 0, SOUTH
+ROBOT 2
+REPORT
+Output: 2, 0, SOUTH
+PLACE 3,2,EAST
+MOVE
+REPORT
+Output: There are 2 robots in the table. Robot 1 : 2, 0, SOUTH
+RIGHT
+MOVE
+REPORT
+Output: There are 2 robots in the table. Robot 1 : 1, 0, WEST
+ROBOT 2
+REPORT
+Output: There are 2 robots in the table. Robot 2 : 3, 2, EAST
+RIGHT
+MOVE
+MOVE
+RIGHT
+MOVE
+MOVE
+MOVE
+MOVE
+MOVE
+MOVE
+REPORT
+Output: There are 2 robots in the table. Robot 2 : 2, 0, WEST
+LEFT
+MOVE
+REPORT
+Output: There are 2 robots in the table. Robot 2 : 2, 0, SOUTH
+ROBOT 1
+REPORT
+Output: There are 2 robots in the table. Robot 1 : 1, 0, WEST
+ROBOT 123
+REPORT
+Output: There are 2 robots in the table. Robot 1 : 1, 0, WEST
+PLACE 4,4,SOUTH
+PLACE 4,3,EAST
+REPORT
+Output: There are 4 robots in the table. Robot 1 : 1, 0, WEST
+ROBOT 4
+REPORT
+Output: There are 4 robots in the table. Robot 4 : 4, 3, EAST
+
