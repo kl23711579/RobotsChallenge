@@ -8,9 +8,8 @@ class Table:
         input_strs = input_str.lower().split(" ")
         try:
             self.actions[input_strs[0]](self, input_str)
-        except Exception as e:
-            print(e)
-            print("\nERROR: INVALID COMMENT!!!")
+        except:
+            pass
 
     def get_robots(self):
         return self.robots
