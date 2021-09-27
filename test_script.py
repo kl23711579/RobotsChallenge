@@ -2,15 +2,24 @@ if __name__ == "__main__":
     import os
     from io import StringIO
     from contextlib import redirect_stdout
-    from table import Table
+    from table import Table, place_robot, change_robot, move, turn_right, turn_left, report
 
     # change dir to testdata
     os.chdir("testdata")
     # list all files inside testdata and remove .
     file_names = [ x for x in os.listdir() if x.endswith(".txt") ]
 
+    actions = {
+        "place": place_robot,
+        "robot": change_robot,
+        "move": move,
+        "left": turn_left,
+        "right": turn_right,
+        "report": report
+    }
+
     for file_name in file_names:
-        t = Table()
+        t = Table(actions)
         with open(file_name, "r") as file:
             commands = [ x.strip() for x in file.readlines() ]
         

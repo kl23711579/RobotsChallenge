@@ -10,7 +10,7 @@ There are two ways to execute the code.
 ### Read command from file
 
 ```python
-python3 table.py <file name>
+python3 main.py <file name>
 ```
 
 I have put some file in the data folder.
@@ -18,13 +18,13 @@ I have put some file in the data folder.
 #### Example
 
 ```python
-python3 table.py "data/1.txt"
+python3 main.py "data/1.txt"
 ```
 
 ### Input command
 
 ```python
-python3 table.py
+python3 main.py
 ```
 
 Input commands in the terminal after execute the code.

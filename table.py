@@ -5,10 +5,13 @@ class Table:
         self.actions = actions
 
     def receive_input(self, input_str):
+        """ Receive command
+        """
         input_strs = input_str.lower().split(" ")
-        try:
+        try: 
             self.actions[input_strs[0]](self, input_str)
-        except:
+        except Exception as e:
+            print(e)
             pass
 
     def get_robots(self):
@@ -21,10 +24,9 @@ class Table:
         return self.current_robot
 
 
-def place_robot(table, input_str):
+def place_robot(table, command = None):
     robots, current_robot = table.get_robots(), table.get_current_robot()
-    input_str = input_str
-    pos1, pos2, direction = input_str.lower().split(" ")[1].split(",")
+    pos1, pos2, direction = command.lower().split(" ")[1].split(",")
     pos1 = int(pos1)
     pos2 = int(pos2)
     is_vaild, err = check_pos(table, [pos1, pos2])
@@ -48,10 +50,11 @@ def move(table, command = None):
         # else:
         #     print("\nERROR: %s" % (err))
 
-def change_robot(table, new_robot):
+def change_robot(table, command = None):
     robots = table.get_robots()
+    new_robot = command.lower().split(" ")[1]
     if int(new_robot) <= len(robots):
-        t.set_current_robot(new_robot)
+        table.set_current_robot(new_robot)
     # else:
         #     print("\nERROR: Robot not exist!!!")
 
@@ -91,27 +94,3 @@ def check_pos(table, pos):
                 return [False, error_msg]
 
     return [True, ""]
-
-if __name__ == '__main__':
-    import sys
-    actions = {
-        "place": place_robot,
-        "robot": change_robot,
-        "move": move,
-        "left": turn_left,
-        "right": turn_right,
-        "report": report
-    }
-    t = Table(actions)
-    if len(sys.argv) > 1:
-        file_name = sys.argv[1]
-        with open(file_name, "r") as f:
-            commands = [ x.strip() for x in f.readlines() ]
-        
-        for command in commands:
-            print(command)
-            t.receive_input(command)
-    else:
-        while True:
-            input_str = input()
-            t.receive_input(input_str)
