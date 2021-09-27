@@ -356,6 +356,102 @@ class TestTableMethods(unittest.TestCase):
         self.assertDictEqual(new_robots, t.robots)
         self.assertEqual("1", t.current_robot)
 
+    def test_place_called_once(self):
+        """ Test place is called once
+        """
+        with patch("table.place_robot") as m_place_robot:
+            actions = {
+                "place": m_place_robot,
+                "robot": change_robot,
+                "move": move,
+                "left": turn_left,
+                "right": turn_right,
+                "report": report
+            }
+            t = Table(actions)
+            t.receive_input("PLACE 1,1,NORTH")
+            m_place_robot.assert_called_once_with(t, "PLACE 1,1,NORTH")
+
+    def test_robot_called_once(self):
+        """ Test robot is called once
+        """
+        with patch("table.change_robot") as m_change_robot:
+            actions = {
+                "place": place_robot,
+                "robot": m_change_robot,
+                "move": move,
+                "left": turn_left,
+                "right": turn_right,
+                "report": report
+            }
+            t = Table(actions)
+            t.receive_input("ROBOT 1")
+            m_change_robot.assert_called_once_with(t, "ROBOT 1")
+
+    def test_move_called_once(self):
+        """ Test move is called once
+        """
+        with patch("table.move") as m_move:
+            actions = {
+                "place": place_robot,
+                "robot": change_robot,
+                "move": m_move,
+                "left": turn_left,
+                "right": turn_right,
+                "report": report
+            }
+            t = Table(actions)
+            t.receive_input("MOVE")
+            m_move.assert_called_once()
+
+    def test_turn_left_called_once(self):
+        """ Test turn left is called once
+        """
+        with patch("table.turn_left") as m_left:
+            actions = {
+                "place": place_robot,
+                "robot": change_robot,
+                "move": move,
+                "left": m_left,
+                "right": turn_right,
+                "report": report
+            }
+            t = Table(actions)
+            t.receive_input("LEFT")
+            m_left.assert_called_once()
+
+    def test_turn_right_called_once(self):
+        """ Test turn right is called once
+        """
+        with patch("table.turn_right") as m_right:
+            actions = {
+                "place": place_robot,
+                "robot": change_robot,
+                "move": move,
+                "left": turn_left,
+                "right": m_right,
+                "report": report
+            }
+            t = Table(actions)
+            t.receive_input("RIGHT")
+            m_right.assert_called_once()
+
+    def test_report_called_once(self):
+        """ Test turn right is called once
+        """
+        with patch("table.report") as m_report:
+            actions = {
+                "place": place_robot,
+                "robot": change_robot,
+                "move": move,
+                "left": turn_left,
+                "right": turn_right,
+                "report": m_report
+            }
+            t = Table(actions)
+            t.receive_input("REPORT")
+            m_report.assert_called_once()
+
     @patch('sys.stdout', new_callable=StringIO)
     def test_report_command(self, m_stdout):
         """
